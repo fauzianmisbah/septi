@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untuk Septi</title>
+    <style>
+        body {
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        .heart-container {
+            position: relative;
+            width: 500px;
+            height: 450px;
+        }
+
+        .text-element {
+            position: absolute;
+            color: #ff0000;
+            font-weight: bold;
+            font-size: 14px;
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+            white-space: nowrap;
+            transform: translate(-50%, -50%);
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="heart-container" id="heart"></div>
+
+<script>
+    const container = document.getElementById('heart');
+    const text = "SEPTI";
+    const totalPoints = 80; // Jumlah kata yang membentuk hati
+
+    // Persamaan matematika untuk bentuk hati (Parametric Heart Shape)
+    // x = 16 * sin^3(t)
+    // y = 13 * cos(t) - 5 * cos(2t) - 2 * cos(3t) - cos(4t)
+
+    for (let i = 0; i < totalPoints; i++) {
+        const t = (i / totalPoints) * 2 * Math.PI;
+        
+        // Menghitung koordinat X dan Y
+        const x = 16 * Math.pow(Math.sin(t), 3);
+        const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+
+        // Skala dan penempatan di tengah container
+        const posX = 250 + x * 13; 
+        const posY = 200 + y * 13;
+
+        const el = document.createElement('div');
+        el.className = 'text-element';
+        el.innerText = text;
+        el.style.left = `${posX}px`;
+        el.style.top = `${posY}px`;
+        
+        // Memberikan sedikit variasi jeda animasi agar terlihat alami
+        el.style.animationDelay = `${Math.random() * 2}s`;
+        
+        container.appendChild(el);
+    }
+</script>
+
+</body>
+</html>
